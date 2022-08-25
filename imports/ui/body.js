@@ -15,13 +15,36 @@ Template.body.onCreated(function bodyOnCreated() {
 Template.body.helpers({
   tasks() {
     const instance = Template.instance();
-    if (instance.state.get('hideCompleted')) {
-      // If hide completed is checked, filter tasks
-      return Tasks.find({ checked: { $ne: true } }, { sort: { createdAt: -1 } });
-    }
+    const hideCompletedTask = instance.state.get('hideCompleted');
 
-    // Otherwise, return all of the tasks
-    return Tasks.find({}, { sort: { createdAt: -1 } });
+    // if user is logged in return all his/her tasks
+    if (Meteor.userId()) {
+      // UPDATE-1: Return only logged in user's task
+      const userId = Meteor.userId();
+      if (hideCompletedTask) {
+        return Tasks.find(
+          {
+            owner: { $eq: userId },
+            checked: { $ne: true }
+          },
+          { sort: { createdAt: -1 } }
+        );
+      }
+
+      return Tasks.find({ owner: { $eq: userId } }, { sort: { createdAt: -1 } });
+    } else {
+      // return only public tasks (of all users)[If no user is logged in]
+      if (hideCompletedTask) {
+        return Tasks.find(
+          {
+            checked: { $ne: true },
+            private: { $ne: true }
+          },
+          { sort: { createdAt: -1 } });
+      }
+
+      return Tasks.find({ private: { $ne: true } }, { sort: { createdAt: -1 } });
+    }
   },
 
   incompleteCount() {
