@@ -2,11 +2,15 @@
   "name": "simple-todos",
   "private": true,
   "scripts": {
-    "start": "meteor run",
+    "start": "meteor run --unsafe-perm",
     "test": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
     "visualize": "meteor --production --extra-packages bundle-visualizer",
     "lint": "eslint ."
+  },
+  "engines": {
+    "node": "14.3",
+    "npm": "6.14.15"
   },
   "dependencies": {
     "@babel/runtime": "^7.17.9",
