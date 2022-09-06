@@ -28,4 +28,4 @@ RUN npm install
 # RUN meteor npm install
 
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["npm", "meteor-hero -e MONGO_URL='mongodb+srv://anurag:rGYxOqXeXRXAB9yx@cluster0.qlkny.mongodb.net/?retryWrites=true&w=majority' -e ROOT_URL='https://alt-3.herokuapp.com'"]
