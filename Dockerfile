@@ -1,22 +1,15 @@
-FROM node:14.19.3
+FROM node:14.3
 
-ENV METEOR_VERSION=2.7.3
-ENV LC_ALL=POSIX
-ENV METEOR_ALLOW_SUPERUSER=1
+# ENV METEOR_ALLOW_SUPERUSER=true
+ENV ROOT_URL="http://localhost:3000"
 
-RUN apt-get -yqq update \
-    && DEBIAN_FRONTEND=noninteractive apt-get -yqq install \
-        curl \
-        g++ \
-        make \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN curl "https://install.meteor.com/" -k | sh
 
-RUN curl "https://install.meteor.com/?release=${METEOR_VERSION}" | /bin/sh
+COPY . /usr/src/app
+WORKDIR /usr/src/app
 
-ENV PATH=$PATH:/root/.meteor
-
-WORKDIR /app
+# RUN chmod -R 700 /usr/src/app/.meteor/local
+RUN meteor npm install
 
 EXPOSE 3000
-
 CMD ["npm", "start"]
