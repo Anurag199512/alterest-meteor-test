@@ -12,4 +12,4 @@ WORKDIR /usr/src/app
 RUN meteor npm install
 
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["meteor npm", "start"]
