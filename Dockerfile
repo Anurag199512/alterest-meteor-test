@@ -1,5 +1,5 @@
 # The tag here should match the Meteor version of your app, per .meteor/release
-FROM geoffreybooth/meteor-base:2.7
+FROM geoffreybooth/meteor-base:2.5
 
 # Copy app package.json and package-lock.json into container
 COPY ./package*.json $APP_SOURCE_FOLDER/
