@@ -1,14 +1,22 @@
-FROM ghcr.io/chneau/meteor:2.7.3-bullseye-slim AS builder
-WORKDIR /app
-COPY --chown=meteor:meteor ./package*.json ./
-RUN meteor npm i
-COPY --chown=meteor:meteor . ./
-RUN meteor build --server-only --directory bundle
-RUN cd bundle/bundle/programs/server && meteor npm install
+FROM node:8.17.0
 
-FROM node:14.19.3-bullseye-slim AS final
-RUN useradd --no-create-home --shell /bin/bash meteor
-USER meteor
+ENV METEOR_VERSION=1.8.3
+ENV LC_ALL=POSIX
+ENV METEOR_ALLOW_SUPERUSER=1
+
+RUN apt-get -yqq update \
+    && DEBIAN_FRONTEND=noninteractive apt-get -yqq install \
+        curl \
+        g++ \
+        make \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN curl "https://install.meteor.com/?release=${METEOR_VERSION}" | /bin/sh
+
+ENV PATH=$PATH:/root/.meteor
+
 WORKDIR /app
-COPY --from=builder /app/bundle/bundle .
-CMD ["node", "main.js"]
+
+EXPOSE 3000
+
+ENTRYPOINT ["meteor"]
