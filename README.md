@@ -1,6 +1,6 @@
 # alterest-meteor-test
 
-CI/CD is setup on main br to deploy to below mentioned heroku URL after each commit.
+CI/CD is setup on `main` branch to deploy app to below mentioned heroku URL after each commit.
 
 ## Web Link URL: 
 
