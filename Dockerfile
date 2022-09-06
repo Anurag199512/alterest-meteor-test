@@ -17,8 +17,8 @@ USER testUser
 #     npm install n -g && \
 #     n latest
 
-COPY . /usr/src/app 
-WORKDIR /usr/src/app
+# COPY . /usr/src/app 
+# WORKDIR /usr/src/app
 
 RUN npm install
 
