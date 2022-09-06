@@ -2,8 +2,7 @@
 
 # RUN curl "https://install.meteor.com/" -k | sh
 
-FROM registry.gitlab.com/tozd/docker/meteor:ubuntu-focal-2.7.3
-
+FROM registry.gitlab.com/tozd/docker/meteor:ubuntu-focal-1.10.2
 # ENV METEOR_ALLOW_SUPERUSER=true
 # RUN useradd testUser
 # USER testUser
