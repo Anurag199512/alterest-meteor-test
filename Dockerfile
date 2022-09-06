@@ -5,8 +5,8 @@
 FROM registry.gitlab.com/tozd/docker/meteor:ubuntu-focal-2.7.3
 
 # ENV METEOR_ALLOW_SUPERUSER=true
-RUN useradd testUser
-USER testUser
+# RUN useradd testUser
+# USER testUser
 
 # ENV ROOT_URL="http://localhost:3000"
 
