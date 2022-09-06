@@ -1,20 +1,18 @@
 # FROM node:14.3
 
-# # ENV METEOR_ALLOW_SUPERUSER=true
-# ENV ROOT_URL="http://localhost:3000"
-
 # RUN curl "https://install.meteor.com/" -k | sh
 
-FROM geoffreybooth/meteor-base:2.7.3
+FROM registry.gitlab.com/tozd/docker/meteor:ubuntu-focal-2.7.3
 
-# RUN apt-get install npm
 ENV METEOR_ALLOW_SUPERUSER=true
-RUN apt-get update && apt-get install -y \
-    software-properties-common \
-    npm
-RUN npm install npm@latest -g && \
-    npm install n -g && \
-    n latest
+ENV ROOT_URL="http://localhost:3000"
+
+# RUN apt-get update && apt-get install -y \
+#     software-properties-common \
+#     npm
+# RUN npm install npm@latest -g && \
+#     npm install n -g && \
+#     n latest
 
 COPY . /usr/src/app 
 WORKDIR /usr/src/app
