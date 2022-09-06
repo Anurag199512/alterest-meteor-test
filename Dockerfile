@@ -1,31 +1,22 @@
-# FROM node:14.3
+FROM node:8.17.0
 
-# RUN curl "https://install.meteor.com/" -k | sh
+ENV METEOR_VERSION=1.8.3
+ENV LC_ALL=POSIX
+ENV METEOR_ALLOW_SUPERUSER=1
 
-FROM registry.gitlab.com/tozd/docker/meteor:ubuntu-focal-1.10.2
-# ENV METEOR_ALLOW_SUPERUSER=true
-# RUN useradd testUser
-# USER testUser
+RUN apt-get -yqq update \
+    && DEBIAN_FRONTEND=noninteractive apt-get -yqq install \
+        curl \
+        g++ \
+        make \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# ENV ROOT_URL="http://localhost:3000"
+RUN curl "https://install.meteor.com/?release=${METEOR_VERSION}" | /bin/sh
 
-# RUN apt-get update && apt-get install -y \
-#     software-properties-common \
-#     npm
-# RUN npm install npm@latest -g && \
-#     npm install n -g && \
-#     n latest
+ENV PATH=$PATH:/root/.meteor
 
-# COPY . /usr/src/app 
-# WORKDIR /usr/src/app
-
-RUN npm install
-
-# COPY . /usr/src/app
-# WORKDIR /usr/src/app
-
-# RUN chmod -R 700 /usr/src/app/.meteor/local
-# RUN meteor npm install
+WORKDIR /app
 
 EXPOSE 3000
-CMD ["npm", "meteor-hero -e MONGO_URL='mongodb+srv://anurag:rGYxOqXeXRXAB9yx@cluster0.qlkny.mongodb.net/?retryWrites=true&w=majority' -e ROOT_URL='https://alt-3.herokuapp.com'"]
+
+ENTRYPOINT ["meteor"]
