@@ -19,4 +19,4 @@ WORKDIR /app
 
 EXPOSE 3000
 
-ENTRYPOINT ["meteor"]
+CMD ["npm", "start"]
