@@ -4,7 +4,10 @@
 
 FROM registry.gitlab.com/tozd/docker/meteor:ubuntu-focal-2.7.3
 
-ENV METEOR_ALLOW_SUPERUSER=true
+# ENV METEOR_ALLOW_SUPERUSER=true
+RUN useradd testUser
+USER testUser
+
 # ENV ROOT_URL="http://localhost:3000"
 
 # RUN apt-get update && apt-get install -y \
