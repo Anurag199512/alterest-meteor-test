@@ -1,5 +1,5 @@
 # The tag here should match the Meteor version of your app, per .meteor/release
-FROM geoffreybooth/meteor-base:2.7.3
+FROM geoffreybooth/meteor-base:2.5
 
 # Copy app package.json and package-lock.json into container
 COPY ./package*.json $APP_SOURCE_FOLDER/
@@ -11,7 +11,7 @@ COPY ./ $APP_SOURCE_FOLDER/
 
 RUN bash $SCRIPTS_FOLDER/build-meteor-bundle.sh
 
-FROM node:14.19.3
+FROM node:fermium-alpine3.15
 
 ENV APP_BUNDLE_FOLDER /opt/bundle
 ENV SCRIPTS_FOLDER /docker
@@ -34,7 +34,7 @@ RUN bash $SCRIPTS_FOLDER/build-meteor-npm-dependencies.sh --build-from-source
 
 # Start another Docker stage, so that the final image doesn’t contain the layer with the build dependencies
 # See previous FROM line; this must match
-FROM node:14.19.3
+FROM node:fermium-alpine3.15
 
 ENV APP_BUNDLE_FOLDER /opt/bundle
 ENV SCRIPTS_FOLDER /docker
