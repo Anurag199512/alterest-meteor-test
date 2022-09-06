@@ -1,3 +1,4 @@
 FROM zodern/meteor
-COPY --chown=app:app ./build /built_app
+RUN meteor build --directory /usr/src/app
+COPY --chown=app:app /usr/src/app /built_app
 RUN cd /built_app/programs/server && npm install
